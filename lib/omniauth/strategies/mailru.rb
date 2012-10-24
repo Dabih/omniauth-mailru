@@ -29,7 +29,10 @@ module OmniAuth
           :first_name => raw_info['first_name'],
           :last_name => raw_info['last_name'],
           :image => (raw_info['has_pic'].to_s != "0") && raw_info['pic_big'] || nil,
-          :location => (raw_info['location'] || {})['name'],
+          :location => ((raw_info['location'] || {})['city'] || {})['name'],
+          # exactly, it is always 0 or 1 and 0 is for men
+          :gender => raw_info['sex'] == 0 ? 'male' : 'female',
+          :birthday => raw_info['birthday'],
           :urls => {
             'Mailru' => raw_info['link']
           }
